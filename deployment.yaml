@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-petclinic-rest
+  labels:
+    app: spring-petclinic-rest
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: spring-petclinic-rest
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: spring-petclinic-rest
+    spec:
+      containers:
+        - name: spring-petclinic-rest
+          image: docker.io/springcommunity/spring-petclinic-rest:3.2.1
+          ports:
+            - containerPort: 9966
